@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/.idea/php proj.iml" filepath="$PROJECT_DIR$/.idea/php proj.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/mushavir_app.iml" filepath="$PROJECT_DIR$/.idea/mushavir_app.iml" />
+>>>>>>> d58397a25d11e273a75b4ae5aa28f08341a6b8ff
+    </modules>
+  </component>
+</project>

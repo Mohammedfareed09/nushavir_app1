@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PHPUnit">
+    <option name="directories">
+      <list>
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$/tset1/tests/Unit" />
+        <option value="$PROJECT_DIR$/tset1/tests/Feature" />
+=======
+>>>>>>> d58397a25d11e273a75b4ae5aa28f08341a6b8ff
+        <option value="$PROJECT_DIR$/musavir_app/tests/Unit" />
+        <option value="$PROJECT_DIR$/musavir_app/tests/Feature" />
+      </list>
+    </option>
+  </component>
+</project>
