@@ -38,6 +38,10 @@ require __DIR__ . '/auth.php';
 Route::get('/login', [UsersController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [UsersController::class, 'login'])->name('login');
 
+Route::get('register', [UsersController::class, 'showRegistrationForm'])->name('myregister.form');
+Route::post('register', [UsersController::class, 'myregister'])->name('myregister');
+
+
 Route::get('/phone', [UsersController::class, 'showPhoneForm'])->name('phone.form');
 Route::post('/phone', [UsersController::class, 'verifyPhone'])->name('phone.verify');
 
@@ -65,3 +69,4 @@ Route::middleware(['auth', 'phone.verified', 'otp.verified'])->group(function ()
 });
 
 // routes/web.php
+Route::post('logout', [UsersController::class, 'logout'])->name('logout')->middleware('auth');

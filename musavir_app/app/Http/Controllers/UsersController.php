@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Twilio\Rest\Client;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -24,12 +25,39 @@ class UsersController extends Controller
         ]);
 
         if (Auth::attempt(['tc' => $request->tc, 'password' => $request->password])) {
-            // Store logged in user's tc in the session
             session(['tc' => $request->tc]);
             return redirect()->route('phone.form');
         }
 
         return back()->withErrors(['tc' => 'Invalid credentials']);
+    }
+
+    public function showRegistrationForm()
+    {
+        return view('user.register');
+    }
+
+    public function myregister(Request $request)
+    {
+        Log::info('Register request data: ', $request->all());
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:6',
+            'phone' => 'required|string|unique:users',
+            'tc' => 'required|string|unique:users',
+        ]);
+        $token = Str::random(64);
+        User::create([
+            'full_name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'phone' => $request->input('phone'),
+            'tc' => $request->input('tc'),
+            'token' => $token,
+        ]);
+        return 'sucsses';
     }
 
     public function showPhoneForm()
@@ -44,23 +72,15 @@ class UsersController extends Controller
     {
         $request->validate(['phone' => 'required']);
 
-        $user = Auth::user();
+        $user = User::where('tc', session('tc'))->first();
 
-        if ($request->input('phone') == $user->phone) {
+        if ($user && $request->input('phone') == $user->phone) {
             session(['phone_verified' => true]);
 
-            // Find the user by phone number
-            $user = User::where('phone', $request->input('phone'))->first();
+            $user->generateVerifyCode();
+            $this->sendOtp($user);
 
-            if ($user) {
-                // Generate and send the verification code
-                $user->generateVerifyCode();
-                $this->sendOtp($user);
-
-                return redirect()->route('otp.form');
-            } else {
-                return back()->withErrors(['phone' => 'Phone number not found.']);
-            }
+            return redirect()->route('otp.form');
         }
 
         return back()->withErrors(['phone' => 'Invalid phone number.']);
@@ -77,11 +97,11 @@ class UsersController extends Controller
     public function verifyOtp(Request $request)
     {
         $request->validate(['otp' => 'required']);
-        $user = auth()->user();
+        $user = User::where('tc', session('tc'))->first();
 
-        if ($request->input('otp') == $user->verification_code) {
-            // OTP is valid, clear session data and proceed
+        if ($user && $request->input('otp') == $user->verification_code) {
             session()->forget(['tc', 'phone_verified']);
+            Auth::login($user);
             return redirect()->route('dashboard');
         }
 
@@ -90,13 +110,19 @@ class UsersController extends Controller
             ->withErrors(['otp' => 'Invalid OTP']);
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        session()->flush();
+        return redirect()->route('login.form')->with('status', 'You have been logged out.');
+    }
+
     private function sendOtp(User $user)
     {
         $account_sid = getenv('TWILIO_SID');
         $auth_token = getenv('TWILIO_TOKEN');
         $twilio_number = getenv('TWILIO_FROM');
 
-        // Log the credentials to ensure they are being read correctly
         Log::info('TWILIO_SID: ' . $account_sid);
         Log::info('TWILIO_TOKEN: ' . $auth_token);
         Log::info('TWILIO_FROM: ' . $twilio_number);
