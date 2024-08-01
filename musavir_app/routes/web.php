@@ -70,3 +70,7 @@ Route::middleware(['auth', 'phone.verified', 'otp.verified'])->group(function ()
 
 // routes/web.php
 Route::post('logout', [UsersController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::get('/lay' ,function(){
+    return view ('layouts.auth');
+});
