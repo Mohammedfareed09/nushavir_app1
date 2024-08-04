@@ -72,5 +72,8 @@ Route::middleware(['auth', 'phone.verified', 'otp.verified'])->group(function ()
 Route::post('logout', [UsersController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/lay' ,function(){
-    return view ('layouts.auth');
+    return view ('layouts.user.dashboard');
 });
+// Route::get('/login' ,function(){
+//     return view ('layouts.user.sign-in');
+// });
