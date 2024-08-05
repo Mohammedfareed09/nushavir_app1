@@ -67,7 +67,9 @@ class Kernel extends HttpKernel
         'twofactor'=> \App\Http\Middleware\TwoFactor::class,
         'phone.verified' => \App\Http\Middleware\PhoneVerified::class,
         'otp.verified' => \App\Http\Middleware\OtpVerified::class,
-
+        'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
 
     ];
 }

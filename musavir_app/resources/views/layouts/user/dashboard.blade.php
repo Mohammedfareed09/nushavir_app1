@@ -854,7 +854,7 @@
                                     <!--end::Menu separator-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
-                                        <a href="account/overview.html" class="menu-link px-5">My Profile</a>
+                                        <a href="{{Route('myregister.form')}}" class="menu-link px-5">My Profile</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
@@ -991,19 +991,41 @@
                                             <span class="menu-arrow"></span>
                                         </span>
                                         <!--end:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="ki-duotone ki-element-11 fs-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+
+                                                </i>
+                                            </span>
+                                            <span class="menu-title">Mange Roles</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
                                         <!--begin:Menu sub-->
                                         <div class="menu-sub menu-sub-accordion">
                                             <!--begin:Menu item-->
                                             <div class="menu-item">
                                                 <!--begin:Menu link-->
-                                                <a class="menu-link active" href="index.html">
+                                                <a class="menu-link active" href="{{Route('Admin.rolesindex')}}">
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Default</span>
+                                                    <span class="menu-title">Roles</span>
                                                 </a>
                                                 <!--end:Menu link-->
                                             </div>
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link active" href="{{Route('Admin.perindex')}}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Permissions</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+
 
 
                                         </div>

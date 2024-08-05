@@ -11,6 +11,11 @@
                 </div>
 
                 <!-- Navigation Links -->
+                @role('Admin')
+                <x-nav-link :href="route('adminlay')" :active="request()->routeIs('adminlay')">
+                    {{ __('Admin') }}
+                </x-nav-link>
+                @endrole
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
