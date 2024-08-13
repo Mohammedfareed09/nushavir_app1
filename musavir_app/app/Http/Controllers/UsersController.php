@@ -13,7 +13,9 @@ class UsersController extends Controller
 {
     public function showLoginForm()
     {
-        return view('user.login');
+        // return view('user.login');
+        return view('layouts.user.sign-in');
+
     }
 
     public function login(Request $request)
@@ -22,6 +24,7 @@ class UsersController extends Controller
             'tc' => 'required',
             'password' => 'required',
             '_token' => 'required',
+            'h-captcha-response' => ['hcaptcha'],
         ]);
 
         if (Auth::attempt(['tc' => $request->tc, 'password' => $request->password])) {

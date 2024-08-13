@@ -26,7 +26,8 @@
     <link href="{{ asset('assets/auth/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
-        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
+        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
+        if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
     </script>
 </head>
 <!--end::Head-->
@@ -65,37 +66,46 @@
                     <!--begin::Wrapper-->
                     <div class="w-lg-500px p-10">
                         <!--begin::Form-->
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
-                            data-kt-redirect-url="index.html" action="#">
+                        <form class="form w-100" method="POST" action="{{ route('login') }}">
+                            @csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-11">
                                 <!--begin::Title-->
-                                <h1 class="text-gray-900 fw-bolder mb-3">Sign In</h1>
+                                <h1 class="text-gray-900 fw-bolder mb-3">Login</h1>
                                 <!--end::Title-->
-                                <!--begin::Subtitle-->
-
-                                <!--end::Subtitle=-->
                             </div>
                             <!--begin::Heading-->
                             <!--begin::Login options-->
 
                             <div class="fv-row mb-8">
-                                <!--begin::Email-->
-                                <input type="int" placeholder="Tc" name="tc" autocomplete="off"
-                                    class="form-control bg-transparent" />
-                                <!--end::Email-->
+                                <!--begin::T.C. Kimlik No-->
+                                <input type="text" placeholder="T.C. Kimlik No" name="tc" id="tc"
+                                    class="form-control bg-transparent" required autofocus autocomplete="username" value="{{ old('tc') }}" />
+                                @if ($errors->has('tc'))
+                                    <span class="text-danger mt-2">{{ $errors->first('tc') }}</span>
+                                @endif
+                                <!--end::T.C. Kimlik No-->
                             </div>
                             <!--end::Input group=-->
                             <div class="fv-row mb-3">
                                 <!--begin::Password-->
-                                <input type="password" placeholder="Password" name="password" autocomplete="off"
-                                    class="form-control bg-transparent" />
+                                <input type="password" placeholder="Password" name="password" id="password"
+                                    class="form-control bg-transparent" required autocomplete="current-password" />
+                                @if ($errors->has('password'))
+                                    <span class="text-danger mt-2">{{ $errors->first('password') }}</span>
+                                @endif
                                 <!--end::Password-->
                             </div>
                             <!--end::Input group=-->
-                            <!--begin::Wrapper-->
 
-                            <!--end::Wrapper-->
+                            <div class="fv-row mb-3">
+                                {!! HCaptcha::display() !!}
+                                @if ($errors->has('h-captcha-response'))
+                                <span class="text-danger mt-2">{{ $errors->first('h-captcha-response') }}</span>
+                            @endif
+                                {!! HCaptcha::script() !!}
+                            </div>
+
                             <!--begin::Submit button-->
                             <div class="d-grid mb-10">
                                 <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
@@ -108,8 +118,6 @@
                                 </button>
                             </div>
                             <!--end::Submit button-->
-
-                            <!--end::Sign up-->
                         </form>
                         <!--end::Form-->
                     </div>
@@ -171,22 +179,18 @@
                 <!--begin::Content-->
                 <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                     <!--begin::Logo-->
-                    <a href="index.html" class="mb-0 mb-lg-12">
-                        <img alt="Logo" src="{{ asset('assets/auth/media/logos/custom-1.png') }}"
-                            class="h-60px h-lg-75px" />
-                    </a>
+                    {{-- <a href="index.html" class="mb-0 mb-lg-12">
+                        <img alt="Logo" src="{{ asset('assets/auth/media/logos/new-logo.png') }}"
+                            class="h-90px h-lg-90px" />
+                    </a> --}}
                     <!--end::Logo-->
                     <!--begin::Image-->
                     <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20"
-                        src="assets/auth/media/misc/auth-screens.png" alt="" />
+                        src="assets/auth/media/logos/new-logo.png" alt="" />
                     <!--end::Image-->
                     <!--begin::Title-->
-                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Fast, Efficient and
-                        Productive</h1>
+                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">MüşavirXpert</h1>
                     <!--end::Title-->
-                    <!--begin::Text-->
-
-                    <!--end::Text-->
                 </div>
                 <!--end::Content-->
             </div>

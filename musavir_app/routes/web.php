@@ -29,6 +29,11 @@ require __DIR__ . '/auth.php';
 Route::get('/login', [UsersController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [UsersController::class, 'login'])->name('login');
 
+Route::get('/login2' ,function(){
+    return view ('layouts.user.sign-in');
+})->name('login2');
+
+
 Route::get('register', [UsersController::class, 'showRegistrationForm'])->name('myregister.form');
 Route::post('register', [UsersController::class, 'myregister'])->name('myregister');
 
