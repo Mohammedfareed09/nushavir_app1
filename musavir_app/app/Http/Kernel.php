@@ -1,5 +1,5 @@
 <?php
-
+//suooo
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
