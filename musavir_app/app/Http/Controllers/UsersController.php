@@ -15,7 +15,6 @@ class UsersController extends Controller
     {
         // return view('user.login');
         return view('layouts.user.sign-in');
-
     }
 
     public function login(Request $request)
@@ -60,7 +59,7 @@ class UsersController extends Controller
             'tc' => $request->input('tc'),
             'token' => $token,
         ]);
-        return 'sucsses';
+        return back();
     }
 
     public function showPhoneForm()
@@ -141,5 +140,13 @@ class UsersController extends Controller
             'from' => $twilio_number,
             'body' => $message,
         ]);
+    }
+
+    public function deleteUser(User $user)
+{
+
+        $user->delete();
+
+        return back();
     }
 }

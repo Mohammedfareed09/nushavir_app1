@@ -79,4 +79,4 @@ Route::middleware(['auth', 'role:Admin'])->name('Admin.')->prefix('Admin')->grou
     Route::get('/permissions', [PermisionController::class, 'index'])->name('perindex');
 });
 
-// abdul branch
+Route::delete('/user', [UsersController::class, 'deleteUser'])->name('delete');
