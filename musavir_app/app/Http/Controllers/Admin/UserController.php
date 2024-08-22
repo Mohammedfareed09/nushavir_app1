@@ -75,4 +75,41 @@ class UserController extends Controller
         return back()->with('message', 'User deleted.');
     }
 
+
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.users.user-edit', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        // Validate the request
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'tc' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        // Update user information
+        $user->full_name = $request->input('full_name');
+        $user->tc = $request->input('tc');
+        $user->phone = $request->input('phone');
+        $user->email = $request->input('email');
+
+        // If password is provided, update it
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+
+        // Redirect back with success message
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+    }
+
 }

@@ -137,3 +137,8 @@ Route::get('/profile', [UsersController::class, 'showProfile'])->name('profile.s
 Route::get('/profile/edit', [UsersController::class, 'edit'])->name('profile.edit');
 Route::post('/profile/edit', [UsersController::class, 'update'])->name('profile.updatee');
 Route::post('/logout', [UsersController::class, 'logout'])->name('logout');
+
+
+
+Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
