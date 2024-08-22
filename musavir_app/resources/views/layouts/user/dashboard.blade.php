@@ -854,7 +854,7 @@
                                     <!--end::Menu separator-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
-                                        <a href="{{Route('myregister.form')}}" class="menu-link px-5">My Profile</a>
+                                        <a href="{{Route('profile.show')}}" class="menu-link px-5">My Profile</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
@@ -913,9 +913,14 @@
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
-                                        <a href="authentication/layouts/corporate/sign-in.html"
-                                            class="menu-link px-5">Sign Out</a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                        <a href="#" class="menu-link px-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Sign Out
+                                        </a>
                                     </div>
+
                                     <!--end::Menu item-->
                                 </div>
                                 <!--end::User account menu-->
@@ -978,18 +983,7 @@
                                     <!--begin:Menu item-->
                                     <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
                                         <!--begin:Menu link-->
-                                        <span class="menu-link">
-                                            <span class="menu-icon">
-                                                <i class="ki-duotone ki-element-11 fs-2">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                    <span class="path3"></span>
-                                                    <span class="path4"></span>
-                                                </i>
-                                            </span>
-                                            <span class="menu-title">Dashboards</span>
-                                            <span class="menu-arrow"></span>
-                                        </span>
+
                                         <!--end:Menu link-->
                                         <span class="menu-link">
                                             <span class="menu-icon">
@@ -1180,18 +1174,6 @@
                 <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
                 <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
                 <script src="{{ asset('assets/auth/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-
-                {{-- <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script> --}}
-
-                <!--end::Vendors Javascript-->
-                <!--begin::Custom Javascript(used for this page only)-->
-                {{-- <script src="assets/js/widgets.bundle.js"></script>
-                <script src="assets/js/custom/widgets.js"></script>
-                <script src="assets/js/custom/apps/chat/chat.js"></script>
-                <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-                <script src="assets/js/custom/utilities/modals/create-app.js"></script>
-                <script src="assets/js/custom/utilities/modals/new-target.js"></script> --}}
-
                 <script src="{{ asset('assets/auth/js/widgets.bundle.js') }}"></script>
                 <script src="{{ asset('assets/auth/js/custom/widgets.js') }}"></script>
                 <script src="{{ asset('assets/auth/js/custom/apps/chat/chat.js') }}"></script>
@@ -1209,4 +1191,3 @@
 </html>
 
 
-{{ asset('assets/auth/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}
