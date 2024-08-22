@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Twilio\Rest\Client;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -104,13 +105,14 @@ class UsersController extends Controller
         if ($user && $request->input('otp') == $user->verification_code) {
             session()->forget(['tc', 'phone_verified']);
             Auth::login($user);
-            return redirect()->route('dashboard');
+            return redirect()->route('mydash');
         }
 
         return redirect()
             ->back()
             ->withErrors(['otp' => 'Invalid OTP']);
     }
+
 
     public function logout()
     {
@@ -207,6 +209,7 @@ class UsersController extends Controller
 
         return redirect()->route('profile.show')->with('status', 'Profile updated successfully');
     }
+
 
 
 }

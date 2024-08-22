@@ -14,7 +14,7 @@ class TwoFactor
 
         if (auth()->check() && $user->verification_code ) {
             if (!$request->is('verify*')) {
-                return redirect()->route('veify-phone');
+                return redirect()->route('otp.verify');
                 // return redirect()->route('verify.index');
             }
         }

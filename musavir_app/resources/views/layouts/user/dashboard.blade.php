@@ -109,15 +109,7 @@
                                 <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                     data-kt-menu-placement="bottom-start"
                                     class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-title">Dashboards</span>
-                                        <span class="menu-arrow d-lg-none"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
 
-                                    <!--end:Menu sub-->
                                 </div>
                                 <!--end:Menu item-->
                                 <!--begin:Menu item-->
@@ -838,12 +830,11 @@
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
                                             <div class="d-flex flex-column">
-                                                <div class="fw-bold d-flex align-items-center fs-5">Robert Fox
-                                                    <span
-                                                        class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span>
+                                                <div class="fw-bold d-flex align-items-center fs-5">{{ $user->full_name }}
+
                                                 </div>
                                                 <a href="#"
-                                                    class="fw-semibold text-muted text-hover-primary fs-7">robert@kt.com</a>
+                                                    class="fw-semibold text-muted text-hover-primary fs-7">{{ $user->email }}</a>
                                             </div>
                                             <!--end::Username-->
                                         </div>
@@ -871,10 +862,7 @@
                                         data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
                                         <a href="#" class="menu-link px-5">
                                             <span class="menu-title position-relative">Language
-                                                <span
-                                                    class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-                                                    <img src="{{ asset('assets/auth/media/flags/united-states.svg') }}" alt="United States Flag"></span></span> <!------------------------------------------------->
-                                        </a>
+
                                         <!--begin::Menu sub-->
                                         <div class="menu-sub menu-sub-dropdown w-175px py-4">
                                             <!--begin::Menu item-->
@@ -892,9 +880,9 @@
                                             <div class="menu-item px-3">
                                                 <a href="account/settings.html" class="menu-link d-flex px-5">
                                                     <span class="symbol symbol-20px me-4">
-                                                        <img class="rounded-1" src="{{ asset('assets/auth/media/flags/spain.svg') }}" alt="" /> <!--FLAAAAAAAAAAAAAAAG ICON-->
+                                                        <img class="rounded-1" src="{{ asset('assets/auth/media/flags/turkey.svg') }}" alt="" /> <!--FLAAAAAAAAAAAAAAAG ICON-->
 
-                                                    </span>Spanish</a>
+                                                    </span>Turkish</a>
                                             </div>
                                             <!--end::Menu item-->
 
@@ -907,9 +895,7 @@
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
-                                    <div class="menu-item px-5 my-1">
-                                        <a href="account/settings.html" class="menu-link px-5">Account Settings</a>
-                                    </div>
+
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
@@ -993,12 +979,24 @@
 
                                                 </i>
                                             </span>
-                                            <span class="menu-title">Mange Roles</span>
+                                            <span class="menu-title">Mange Users</span>
                                             <span class="menu-arrow"></span>
                                         </span>
                                         <!--begin:Menu sub-->
                                         <div class="menu-sub menu-sub-accordion">
                                             <!--begin:Menu item-->
+
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link active" href="{{Route('admin.users.index')}}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Users</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+
                                             <div class="menu-item">
                                                 <!--begin:Menu link-->
                                                 <a class="menu-link active" href="{{Route('Admin.rolesindex')}}">

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\permissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PremisionController;
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\PhoneNumberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TwoFactorController;
@@ -17,13 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})
-    ->middleware(['auth', 'verified', 'twofactor'])
-    ->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })
+//     ->middleware(['auth', 'verified', 'twofactor'])
+//     ->name('dashboard');
 
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';
 
 
 Route::get('/login', [UsersController::class, 'showLoginForm'])->name('login.form');
@@ -50,21 +51,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/phone-verify', [UsersController::class, 'showOtpForm'])->name('otp.form');
         Route::post('/phone-verify', [UsersController::class, 'verifyOtp'])->name('otp.verify');
     });
-});
-
-Route::middleware(['auth', 'phone.verified', 'otp.verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/lay' ,function(){
-        return view ('layouts.user.dashboard');
-    })->name('adminlay');
 
 });
+
+ Route::get('/dashboard', [dashboardController::class, 'show'])->name('mydash');
+
 
 // routes/web.php
 Route::post('logout', [UsersController::class, 'logout'])->name('logout')->middleware('auth');
