@@ -7,14 +7,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="{{ asset('assets/auth/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/auth/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <style>
-        /* Ensure the avatar image is properly resized */
-        .avatar-display img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-        }
-    </style>
+    <link href="{{ asset('assets/auth/css/profile.css') }}" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar" class="app-default">
