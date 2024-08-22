@@ -51,41 +51,50 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="selectAll">
-                                        <label for="selectAll"></label>
-                                    </span>
-                                </th>
-                                <th>Name</th>
-                                <th>Role</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $user)
+                    <div class="flex flex-col">
+                        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
                                 <tr>
-                                    <td>
-                                        <span class="custom-checkbox">
-                                            <input type="checkbox" id="checkbox4" name="options[]" value="1">
-                                            <label for="checkbox4"></label>
-                                        </span>
-                                    </td>
-                                    <td>{{ $user->full_name }}</td>
-                                    <td>
-                                        @foreach ($user->roles as $role)
-                                            <span class="badge badge-info">{{ $role->name }}</span>
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        <!-- Add other relevant fields here if necessary -->
-                                    </td>
-
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only">Edit</span>
+                                    </th>
                                 </tr>
-                            @endforeach
-                        </tbody>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach ($roles as $role)
+                                    <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        {{ $role->name }}
+                                    </div>
+                                    </td>
+                                    <td>
+                                        <div class="flex justify-end">
+                                            <div class="flex space-x-2">
+                                             <a href="{{ route('admin.roles.edit', $role->id) }}" class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-md">Edit</a>
+                                             <form class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-md" method="POST" action="{{ route('admin.roles.destroy', $role->id) }}" onsubmit="return confirm('Are you sure?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">Delete</button>
+                                             </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+
+
 
                     </table>
                     <div class="clearfix">
@@ -203,7 +212,7 @@
         <div id="deleteEmployeeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="deleteForm" action="{{ route('delete') }}" method="POST">
+                    {{-- <form id="deleteForm" action="{{ route('delete') }}" method="POST"> --}}
                         @csrf
                         @method('DELETE')
 

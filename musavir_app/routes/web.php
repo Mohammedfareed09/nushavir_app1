@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\IndexController;
-use App\Http\Controllers\Admin\PermisionController;
+use App\Http\Controllers\Admin\permissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PremisionController;
 use App\Http\Controllers\PhoneNumberController;
@@ -76,7 +76,56 @@ Route::middleware(['auth', 'role:Admin'])->name('Admin.')->prefix('Admin')->grou
         return view('Admin.Index'); })->name('Adminindex');
     Route::get('/', [IndexController::class, 'Index'])->name('index');
     Route::get('/roles', [RoleController::class, 'index'])->name('rolesindex');
-    Route::get('/permissions', [PermisionController::class, 'index'])->name('perindex');
+    Route::get('/permissions', [permissionController::class, 'index'])->name('perindex');
 });
 
-Route::delete('/user', [UsersController::class, 'deleteUser'])->name('delete');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('permissions', permissionController::class);
+});
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('permissions', PermissionController::class);
+    Route::resource('roles', RoleController::class);
+});
+
+Route::get('admin/roles/{role}/permissions', [RoleController::class, 'givePermission'])->name('admin.roles.permissions');
+
+// Add this to support POST requests
+Route::post('admin/roles/{role}/permissions', [RoleController::class, 'givePermission'])->name('admin.roles.permissions');
+
+// If you're using a GET request for displaying permissions (which is likely what you have)
+Route::get('admin/roles/{role}/permissions', [RoleController::class, 'showPermissions'])->name('admin.roles.showPermissions');
+
+Route::post('admin/roles/{role}/permissions/{permission}/revoke', [RoleController::class, 'revokePermission'])->name('admin.roles.permissions.revoke');
+Route::delete('admin/roles/{role}/permissions/{permission}/revoke', [RoleController::class, 'revokePermission'])->name('admin.roles.permissions.revoke');
+Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+Route::delete('/users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
+
+use App\Http\Controllers\Admin\UserController;
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:Admin'])->group(function () {
+    Route::resource('users', UserController::class);
+
+});
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('users', UserController::class);
+
+    // Add this route for removing roles
+    Route::post('users/{user}/roles/{role}/remove', [UserController::class, 'removeRole'])->name('users.roles.remove');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('users', UserController::class);
+
+    // Route to display user roles
+    Route::get('users/{user}/roles', [UserController::class, 'show'])->name('users.roles');
+
+    // Route to remove a specific role from a user
+    Route::post('users/{user}/roles/{role}/remove', [UserController::class, 'removeRole'])->name('users.roles.remove');
+
+    // Route to assign a role to a user
+    Route::post('users/{user}/roles', [UserController::class, 'assignRole'])->name('users.roles.assign');
+});
+
+Route::get('admin/users/{user}/permissions', [UserController::class, 'showPermissions'])->name('admin.users.permissions');
+Route::post('admin/users/{user}/roles/{role}/remove', [UserController::class, 'removeRole'])->name('admin.users.roles.remove');
+Route::delete('admin/users/{user}/roles/{role}/remove', [UserController::class, 'removeRole'])->name('admin.users.roles.remove');
