@@ -57,7 +57,7 @@ Route::middleware(['auth', 'phone.verified', 'otp.verified'])->group(function ()
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/lay' ,function(){
@@ -80,3 +80,10 @@ Route::middleware(['auth', 'role:Admin'])->name('Admin.')->prefix('Admin')->grou
 });
 
 Route::delete('/user', [UsersController::class, 'deleteUser'])->name('delete');
+
+
+
+Route::get('/profile', [UsersController::class, 'showProfile'])->name('profile.show');
+Route::get('/profile/edit', [UsersController::class, 'edit'])->name('profile.edit');
+Route::post('/profile/edit', [UsersController::class, 'update'])->name('profile.updatee');
+Route::post('/logout', [UsersController::class, 'logout'])->name('logout');

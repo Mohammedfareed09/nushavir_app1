@@ -119,6 +119,7 @@ class UsersController extends Controller
         return redirect()->route('login.form')->with('status', 'You have been logged out.');
     }
 
+
     private function sendOtp(User $user)
     {
         $account_sid = getenv('TWILIO_SID');
@@ -143,10 +144,69 @@ class UsersController extends Controller
     }
 
     public function deleteUser(User $user)
-{
-
+    {
         $user->delete();
 
         return back();
     }
+
+    public function showProfile(User $user)
+    {
+        $user = Auth::user();
+        return view('layouts.user.profile.profile', compact('user'));
+    }
+
+    public function edit(User $user)
+    {
+        $user = Auth::user();
+        return view('layouts.user.profile.edit', compact('user'));
+    }
+
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'tc' => 'required|string|max:20|unique:users,tc,' . $user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|confirmed|min:6',
+            'avatar_path' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        // Check if the remove_avatar input is set to 1
+        if ($request->input('remove_avatar') == '1') {
+            // Delete the current avatar if it exists
+            if ($user->avatar_path && \Storage::exists('public/' . $user->avatar_path)) {
+                \Storage::delete('public/' . $user->avatar_path);
+            }
+            // Set avatar_path to null
+            $user->avatar_path = null;
+        } elseif ($request->hasFile('avatar_path')) {
+            // Delete old avatar if exists
+            if ($user->avatar_path && \Storage::exists('public/' . $user->avatar_path)) {
+                \Storage::delete('public/' . $user->avatar_path);
+            }
+
+            // Store new avatar
+            $avatarPath = $request->file('avatar_path')->store('avatars', 'public');
+            $user->avatar_path = $avatarPath;
+        }
+
+        // Update user details
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->full_name = $request->full_name;
+        $user->phone = $request->phone;
+        $user->tc = $request->tc;
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->route('profile.show')->with('status', 'Profile updated successfully');
+    }
+
+
 }
