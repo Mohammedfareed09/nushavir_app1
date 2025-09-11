@@ -1,27 +1,3 @@
-I'll scan the key source and config files to tailor the README: entrypoint, service worker behavior, and configuration keys.
-Read file: ProdIot_PLC_Service/ProdIot_PLC_Service/Program.cs
-Read file: ProdIot_PLC_Service/ProdIot_PLC_Service/Worker.cs
-Read file: ProdIot_PLC_Service/ProdIot_PLC_Service/AppConfig.cs
-Read file: ProdIot_PLC_Service/ProdIot_PLC_Service/ProdiotPLCService.cs
-Read file: ProdIot_PLC_Service/ProdIot_PLC_Service/appsettings.json
-
-I'm going to open the core source and config files to tailor an accurate README: the entrypoint, worker/service logic, and configuration JSONs.
-Read file: Program.cs
-Read file: Worker.cs
-Read file: AppConfig.cs
-Read file: ProdiotPLCService.cs
-Read file: appsettings.json
-Read file: appsettings.Development.json
-Read file: config.json
-Let me read the main source and config files so the README reflects actual behavior and configuration.
-Read file: ProdIot_PLC_Service/Program.cs
-Read file: ProdIot_PLC_Service/Worker.cs
-Read file: ProdIot_PLC_Service/ProdiotPLCService.cs
-Read file: ProdIot_PLC_Service/AppConfig.cs
-Read file: ProdIot_PLC_Service/appsettings.json
-
-### I read your code to tailor this. I’ll paste a complete, ready-to-use README below.
-
 ```markdown
 # ProdIot PLC Service (S7 ↔ MQTT Bridge)
 
